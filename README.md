@@ -273,7 +273,7 @@ alumni-association/
 ![Jobs Listing](Images/Jobs.png)
 
 ### Events Management
-![Events Page 1](Images/Eventl.png)
+![Events Page 1](Images/Event1.png)
 
 ### Event Detail with Countdown
 ![Event Detail](Images/event_detail.png)
