@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Support Alumni - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-danger text-white">
+        <h4 class="mb-0">❤️ Support Your Institution</h4>
+      </div>
+      <div class="card-body p-5">
+        <p class="lead text-muted mb-4">
+          Your contribution helps us support current students, organize alumni events, and strengthen our alumni network.
+        </p>
+        
+        <div class="alert alert-info mb-4">
+          <strong>💡 Did You Know?</strong> Alumni contributions directly support:
+          <ul class="mb-0 mt-2">
+            <li>Scholarships for deserving students</li>
+            <li>Campus development projects</li>
+            <li>Alumni networking events</li>
+            <li>Mentorship programs</li>
+          </ul>
+        </div>
+        
+        <form method="post" novalidate>
+          {% csrf_token %}
+          
+          <div class="mb-4">
+            <label for="id_amount" class="form-label fw-bold">Donation Amount (₹)</label>
+            {{ form.amount }}
+            {% if form.amount.errors %}<small class="text-danger">{{ form.amount.errors }}</small>{% endif %}
+            <div class="mt-2">
+              <small class="text-muted">Quick amounts: </small>
+              <button type="button" class="btn btn-sm btn-outline-primary" onclick="setAmount(1000)">₹1,000</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" onclick="setAmount(5000)">₹5,000</button>
+              <button type="button" class="btn btn-sm btn-outline-primary" onclick="setAmount(10000)">₹10,000</button>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="id_message" class="form-label fw-bold">Message (Optional)</label>
+            {{ form.message }}
+            {% if form.message.errors %}<small class="text-danger">{{ form.message.errors }}</small>{% endif %}
+            <small class="text-muted d-block mt-1">Share why you're supporting the institution</small>
+          </div>
+          
+          <button type="submit" class="btn btn-danger btn-lg w-100 fw-bold">💳 Donate Now</button>
+        </form>
+        
+        <hr class="my-4">
+        <p class="text-center text-muted small">
+          <strong>Note:</strong> All donations are tax-deductible. You will receive a receipt via email.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function setAmount(amount) {
+  document.getElementById('id_amount').value = amount;
+}
+</script>
+{% endblock %}

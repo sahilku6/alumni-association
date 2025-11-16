@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Apply for {{ job.title }} - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-info text-white">
+        <h4 class="mb-0">📝 Apply for {{ job.title }}</h4>
+      </div>
+      <div class="card-body p-5">
+        <div class="alert alert-info mb-4">
+          <strong>{{ job.company }}</strong> • {{ job.location }}
+          {% if job.salary %}• <strong>{{ job.salary }}</strong>{% endif %}
+        </div>
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+          
+          <div class="mb-4">
+            <label for="id_cover_letter" class="form-label fw-bold">Cover Letter</label>
+            {{ form.cover_letter }}
+            {% if form.cover_letter.errors %}<small class="text-danger">{{ form.cover_letter.errors }}</small>{% endif %}
+            <small class="text-muted d-block mt-1">Tell the employer why you're a great fit for this role.</small>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-info btn-lg fw-bold">✅ Submit Application</button>
+            <a href="{% url 'core:job_detail' job.pk %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

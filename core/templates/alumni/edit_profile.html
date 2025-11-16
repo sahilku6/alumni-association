@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">✏️ Edit Your Profile</h4>
+      </div>
+      <div class="card-body p-5">
+        {% if profile.profile_image %}
+          <div class="text-center mb-4">
+            <img src="{{ profile.profile_image.url }}" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+          </div>
+        {% endif %}
+        
+        <form method="post" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="id_graduation_year" class="form-label fw-bold">Graduation Year</label>
+              {{ form.graduation_year }}
+              {% if form.graduation_year.errors %}<small class="text-danger">{{ form.graduation_year.errors }}</small>{% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="id_branch" class="form-label fw-bold">Branch</label>
+              {{ form.branch }}
+              {% if form.branch.errors %}<small class="text-danger">{{ form.branch.errors }}</small>{% endif %}
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="id_company" class="form-label fw-bold">Current Company</label>
+              {{ form.company }}
+              {% if form.company.errors %}<small class="text-danger">{{ form.company.errors }}</small>{% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="id_current_title" class="form-label fw-bold">Job Title</label>
+              {{ form.current_title }}
+              {% if form.current_title.errors %}<small class="text-danger">{{ form.current_title.errors }}</small>{% endif %}
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="id_location" class="form-label fw-bold">Location</label>
+              {{ form.location }}
+              {% if form.location.errors %}<small class="text-danger">{{ form.location.errors }}</small>{% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="id_phone" class="form-label fw-bold">Phone Number</label>
+              {{ form.phone }}
+              {% if form.phone.errors %}<small class="text-danger">{{ form.phone.errors }}</small>{% endif %}
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="id_bio" class="form-label fw-bold">About You</label>
+            {{ form.bio }}
+            {% if form.bio.errors %}<small class="text-danger">{{ form.bio.errors }}</small>{% endif %}
+          </div>
+          
+          <div class="mb-3">
+            <label for="id_linkedin" class="form-label fw-bold">LinkedIn Profile</label>
+            {{ form.linkedin }}
+            {% if form.linkedin.errors %}<small class="text-danger">{{ form.linkedin.errors }}</small>{% endif %}
+          </div>
+          
+          <div class="mb-4">
+            <label for="id_profile_image" class="form-label fw-bold">Profile Picture</label>
+            {{ form.profile_image }}
+            {% if form.profile_image.errors %}<small class="text-danger">{{ form.profile_image.errors }}</small>{% endif %}
+            <small class="text-muted d-block mt-1">JPG or PNG, max 5MB</small>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg fw-bold">💾 Save Changes</button>
+            <a href="{% url 'core:profile' request.user.pk %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

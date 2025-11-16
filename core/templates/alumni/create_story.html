@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Share Success Story - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-success text-white">
+        <h4 class="mb-0">✍️ Share Your Success Story</h4>
+      </div>
+      <div class="card-body p-5">
+        <p class="text-muted mb-4">Inspire other alumni by sharing your journey and achievements!</p>
+        
+        <form method="post" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+          
+          <div class="mb-4">
+            <label for="id_title" class="form-label fw-bold">Story Title</label>
+            {{ form.title }}
+            {% if form.title.errors %}<small class="text-danger">{{ form.title.errors }}</small>{% endif %}
+            <small class="text-muted d-block mt-1">Make it catchy and inspiring!</small>
+          </div>
+          
+          <div class="mb-4">
+            <label for="id_content" class="form-label fw-bold">Your Story</label>
+            {{ form.content }}
+            {% if form.content.errors %}<small class="text-danger">{{ form.content.errors }}</small>{% endif %}
+            <small class="text-muted d-block mt-1">Share your journey, challenges overcome, and lessons learned.</small>
+          </div>
+          
+          <div class="mb-4">
+            <label for="id_image" class="form-label fw-bold">Featured Image (Optional)</label>
+            {{ form.image }}
+            {% if form.image.errors %}<small class="text-danger">{{ form.image.errors }}</small>{% endif %}
+            <small class="text-muted d-block mt-1">Upload a photo to make your story stand out!</small>
+          </div>
+          
+          <div class="mb-4 form-check">
+            <label class="form-check-label fw-bold" for="id_featured">
+              {{ form.featured }} Featured Story
+            </label>
+            <small class="text-muted d-block mt-1">Check this if you'd like this featured on homepage</small>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success btn-lg">📤 Publish Story</button>
+            <a href="{% url 'core:dashboard' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

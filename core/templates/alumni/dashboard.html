@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <h2 class="display-6">👋 Welcome, {{ user.first_name|default:user.username }}!</h2>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Profile Card -->
+  <div class="col-lg-3 mb-4">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        {% if user.profile.profile_image %}
+          <img src="{{ user.profile.profile_image.url }}" class="rounded-circle mb-3 img-thumbnail" style="width: 120px; height: 120px; object-fit: cover;" alt="{{ user.get_full_name }}">
+        {% else %}
+          <div class="rounded-circle bg-primary mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 120px; height: 120px; color: white; font-size: 48px; font-weight: bold;">
+            {{ user.first_name|first }}
+          </div>
+        {% endif %}
+        <h5 class="card-title">{{ user.get_full_name }}</h5>
+        <p class="text-muted">{{ user.profile.current_title|default:"Update your profile" }}</p>
+        <div class="d-grid gap-2">
+          <a href="{% url 'core:edit_profile' %}" class="btn btn-primary btn-sm">✏️ Edit Profile</a>
+          <a href="{% url 'core:profile' user.pk %}" class="btn btn-outline-primary btn-sm">👁️ View Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Info -->
+  <div class="col-lg-9 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">📋 Your Information</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <strong>📅 Graduation Year:</strong>
+            <p>{{ user.profile.graduation_year|default:"Not set" }}</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <strong>🎓 Branch:</strong>
+            <p>{{ user.profile.get_branch_display|default:"Not set" }}</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <strong>🏢 Company:</strong>
+            <p>{{ user.profile.company|default:"Not set" }}</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <strong>📍 Location:</strong>
+            <p>{{ user.profile.location|default:"Not set" }}</p>
+          </div>
+          <div class="col-md-12 mb-3">
+            <strong>📝 Bio:</strong>
+            <p>{{ user.profile.bio|default:"No bio yet"|linebreaks }}</p>
+          </div>
+          {% if user.profile.linkedin %}
+            <div class="col-md-12">
+              <a href="{{ user.profile.linkedin }}" target="_blank" class="btn btn-info btn-sm">
+                <i class="fab fa-linkedin"></i> LinkedIn Profile
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Stories -->
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <div class="card shadow-sm">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0">📖 Your Success Stories</h5>
+      </div>
+      <div class="card-body">
+        {% if recent_stories %}
+          <div class="list-group">
+            {% for story in recent_stories %}
+              <a href="{% url 'core:story_detail' story.pk %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1">{{ story.title }}</h6>
+                  <small class="text-muted">{{ story.created_at|date:"M d, Y" }}</small>
+                </div>
+                <p class="mb-1 text-muted">{{ story.content|truncatewords:20 }}</p>
+              </a>
+            {% endfor %}
+          </div>
+          <a href="{% url 'core:success_stories' %}" class="btn btn-success btn-sm mt-3">View All Stories</a>
+        {% else %}
+          <p class="text-muted">You haven't posted any success stories yet.</p>
+          <a href="{% url 'core:create_story' %}" class="btn btn-success btn-sm">📝 Share Your Story</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Upcoming Events -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow-sm">
+      <div class="card-header bg-warning text-dark">
+        <h5 class="mb-0">📅 Upcoming Events</h5>
+      </div>
+      <div class="card-body">
+        {% if upcoming_events %}
+          <div class="row">
+            {% for event in upcoming_events %}
+              <div class="col-md-6 mb-3">
+                <div class="card border-left-warning">
+                  <div class="card-body">
+                    <h6 class="card-title">{{ event.title }}</h6>
+                    <p class="card-text small text-muted">{{ event.description|truncatewords:15 }}</p>
+                    <p class="card-text">
+                      <small>📅 {{ event.start|date:"M d, Y H:i" }}</small><br>
+                      {% if event.location %}<small>📍 {{ event.location }}</small>{% endif %}
+                    </p>
+                    <a href="{% url 'core:event_detail' event.pk %}" class="btn btn-warning btn-sm">View Event</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted">No upcoming events at the moment.</p>
+        {% endif %}
+        <div class="d-grid gap-2 my-3">
+          <a href="{% url 'core:my_events' %}" class="btn btn-outline-info btn-sm">📅 My Events</a>
+          <a href="{% url 'core:create_event' %}" class="btn btn-info btn-sm">➕ Create Event</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .border-left-warning {
+    border-left: 4px solid #ffc107 !important;
+  }
+</style>
+{% endblock %}

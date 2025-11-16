@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}{{ story.title }} - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8">
+    {% if story.image %}
+      <img src="{{ story.image.url }}" class="img-fluid rounded shadow mb-4" alt="{{ story.title }}" style="max-height: 400px; object-fit: cover; width: 100%;">
+    {% endif %}
+
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body">
+        <h1 class="display-5 mb-3">{{ story.title }}</h1>
+        
+        <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+          {% if story.author.profile.profile_image %}
+            <img src="{{ story.author.profile.profile_image.url }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+          {% else %}
+            <div class="rounded-circle bg-secondary me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; color: white; font-size: 20px;">
+              {{ story.author.first_name|first }}
+            </div>
+          {% endif %}
+          <div>
+            <p class="mb-0"><strong>{{ story.author.get_full_name }}</strong></p>
+            <small class="text-muted">{{ story.created_at|date:"M d, Y" }}</small>
+          </div>
+        </div>
+
+        <div class="story-content" style="font-size: 1.1rem; line-height: 1.8;">
+          {{ story.content|linebreaks }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">👤 About Author</h5>
+      </div>
+      <div class="card-body">
+        <p><strong>Name:</strong><br>{{ story.author.get_full_name }}</p>
+        <p><strong>Graduation:</strong><br>{{ story.author.profile.graduation_year|default:"N/A" }}</p>
+        <p><strong>Company:</strong><br>{{ story.author.profile.company|default:"N/A" }}</p>
+        <a href="{% url 'core:profile' story.author.pk %}" class="btn btn-outline-primary w-100">View Full Profile</a>
+      </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-info text-white">
+        <h5 class="mb-0">📤 Share Story</h5>
+      </div>
+      <div class="card-body d-grid gap-2">
+        <button class="btn btn-sm btn-outline-primary">Facebook</button>
+        <button class="btn btn-sm btn-outline-info">Twitter</button>
+        <button class="btn btn-sm btn-outline-success">WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Post a Job - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-info text-white">
+        <h4 class="mb-0">💼 Post a Job Opportunity</h4>
+      </div>
+      <div class="card-body p-5">
+        <p class="text-muted mb-4">Help fellow alumni find great career opportunities!</p>
+        
+        <form method="post" novalidate>
+          {% csrf_token %}
+          
+          <div class="mb-3">
+            <label for="id_title" class="form-label fw-bold">Job Title *</label>
+            {{ form.title }}
+            {% if form.title.errors %}<small class="text-danger">{{ form.title.errors }}</small>{% endif %}
+          </div>
+          
+          <div class="mb-3">
+            <label for="id_company" class="form-label fw-bold">Company Name *</label>
+            {{ form.company }}
+            {% if form.company.errors %}<small class="text-danger">{{ form.company.errors }}</small>{% endif %}
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="id_location" class="form-label fw-bold">Location *</label>
+              {{ form.location }}
+              {% if form.location.errors %}<small class="text-danger">{{ form.location.errors }}</small>{% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="id_salary" class="form-label fw-bold">Salary Range (Optional)</label>
+              {{ form.salary }}
+              {% if form.salary.errors %}<small class="text-danger">{{ form.salary.errors }}</small>{% endif %}
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <label for="id_description" class="form-label fw-bold">Job Description *</label>
+            {{ form.description }}
+            {% if form.description.errors %}<small class="text-danger">{{ form.description.errors }}</small>{% endif %}
+          </div>
+          
+          <div class="mb-4">
+            <label for="id_apply_url" class="form-label fw-bold">Application Link *</label>
+            {{ form.apply_url }}
+            {% if form.apply_url.errors %}<small class="text-danger">{{ form.apply_url.errors }}</small>{% endif %}
+            <small class="text-muted d-block mt-1">Link where candidates can apply (e.g., careers page)</small>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-info btn-lg fw-bold">📢 Post Job</button>
+            <a href="{% url 'core:job_list' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

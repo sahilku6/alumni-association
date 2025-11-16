@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Create Event - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-header bg-info text-white">
+        <h4 class="mb-0">📅 Create Event</h4>
+      </div>
+      <div class="card-body p-4">
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="id_title" class="form-label">Title</label>
+            {{ form.title }}
+            {% if form.title.errors %}<div class="text-danger small">{{ form.title.errors }}</div>{% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label for="id_description" class="form-label">Description</label>
+            {{ form.description }}
+            {% if form.description.errors %}<div class="text-danger small">{{ form.description.errors }}</div>{% endif %}
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="id_start" class="form-label">Start</label>
+              {{ form.start }}
+              {% if form.start.errors %}<div class="text-danger small">{{ form.start.errors }}</div>{% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="id_end" class="form-label">End</label>
+              {{ form.end }}
+              {% if form.end.errors %}<div class="text-danger small">{{ form.end.errors }}</div>{% endif %}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_location" class="form-label">Location</label>
+            {{ form.location }}
+            {% if form.location.errors %}<div class="text-danger small">{{ form.location.errors }}</div>{% endif %}
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Create Event</button>
+            <a href="{% url 'core:my_events' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

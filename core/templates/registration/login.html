@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Login - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-5">
+    <div class="card shadow-lg border-0">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">🔐 Alumni Login</h4>
+      </div>
+      <div class="card-body p-5">
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger alert-dismissible fade show">
+            {{ form.non_field_errors }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endif %}
+        
+        <form method="post" novalidate>
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="id_username" class="form-label fw-bold">Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}<small class="text-danger d-block mt-1">{{ form.username.errors }}</small>{% endif %}
+          </div>
+          
+          <div class="mb-4">
+            <label for="id_password" class="form-label fw-bold">Password</label>
+            {{ form.password }}
+            {% if form.password.errors %}<small class="text-danger d-block mt-1">{{ form.password.errors }}</small>{% endif %}
+          </div>
+          
+          <button type="submit" class="btn btn-primary w-100 btn-lg fw-bold">Login</button>
+        </form>
+        
+        <hr class="my-4">
+        
+        <p class="text-center mb-0">
+          Don't have an account? 
+          <a href="{% url 'core:register' %}" class="fw-bold text-primary">Register here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

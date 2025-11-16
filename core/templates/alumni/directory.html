@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Alumni Directory - Alumni Association{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <h2>Alumni Directory</h2>
+    <p class="text-muted">Search and connect with fellow alumni.</p>
+  </div>
+</div>
+
+<div class="row mb-4">
+  <div class="col-lg-12">
+    <form method="get" class="row g-3">
+      <div class="col-md-5">
+        <input type="text" name="q" class="form-control" placeholder="Search by name or company" value="{{ request.GET.q }}">
+      </div>
+      <div class="col-md-4">
+        <input type="number" name="year" class="form-control" placeholder="Graduation year" value="{{ request.GET.year }}">
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if object_list %}
+  <div class="row">
+    {% for profile in object_list %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            {% if profile.profile_image %}
+              <img src="{{ profile.profile_image.url }}" class="rounded-circle mb-3" width="80" alt="{{ profile.user.get_full_name }}" style="object-fit: cover; height: 80px;">
+            {% else %}
+              <div class="rounded-circle bg-secondary mb-3" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px;">
+                {{ profile.user.first_name|first }}
+              </div>
+            {% endif %}
+            <h5 class="card-title">
+              <a href="{% url 'core:profile' profile.user.pk %}">{{ profile.user.get_full_name }}</a>
+            </h5>
+            <p class="card-text text-muted small">
+              {{ profile.current_title|default:"" }}
+            </p>
+            <div class="small text-muted">
+              {% if profile.graduation_year %}<p>📅 {{ profile.graduation_year }}</p>{% endif %}
+              {% if profile.company %}<p>🏢 {{ profile.company }}</p>{% endif %}
+              {% if profile.branch %}<p>🎓 {{ profile.branch }}</p>{% endif %}
+            </div>
+            <a href="{% url 'core:profile' profile.user.pk %}" class="btn btn-sm btn-outline-primary mt-2">View Profile</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1">First</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          </li>
+        {% endif %}
+
+        {% for num in paginator.page_range %}
+          {% if page_obj.number == num %}
+            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ paginator.num_pages }}">Last</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% else %}
+  <div class="alert alert-info" role="alert">
+    No alumni found matching your search criteria.
+  </div>
+{% endif %}
+{% endblock %}
