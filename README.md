@@ -274,16 +274,12 @@ alumni-association/
 
 ### Events Management
 ![Events Page 1](Images/Eventl.png)
-![Events Page 2](Images/Event2.png)
-
-### Success Stories
-![Success Stories](Images/Success Stories.png)
 
 ### Event Detail with Countdown
 ![Event Detail](Images/event_detail.png)
 
-### Create Event
-![Create Event](Images/create_event.png)
+### Success Stories
+![Success Stories](Images/SuccessStories.png)
 
 ### Donation Page
 ![Donation](Images/donation.png)
