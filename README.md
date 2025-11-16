@@ -255,33 +255,42 @@ alumni-association/
 ## 📸 Screenshots
 
 ### Homepage
-![Homepage 1](Images/homel.png)
+
+![Homepage 1](Images/home1.png)
 ![Homepage 2](Images/home2.png)
 ![Homepage 3](Images/home3.png)
 
 ### User Authentication
+
 ![User Login](Images/login.png)
 ![User Registration](Images/register.png)
 
 ### Alumni Directory
+
 ![Alumni Directory](Images/Directory.png)
 
 ### User Dashboard
+
 ![Dashboard](Images/dashboard.png)
 
 ### Job Portal
+
 ![Jobs Listing](Images/Jobs.png)
 
 ### Events Management
+
 ![Events Page 1](Images/Event1.png)
 
 ### Event Detail with Countdown
+
 ![Event Detail](Images/event_detail.png)
 
 ### Success Stories
+
 ![Success Stories](Images/SuccessStories.png)
 
 ### Donation Page
+
 ![Donation](Images/donation.png)
 
 ## 🔐 Security Features
